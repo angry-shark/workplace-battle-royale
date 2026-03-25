@@ -1,0 +1,138 @@
+[gd_scene load_steps=2 format=3 uid="uid://d8yvxg3ulq3b"]
+
+[ext_resource type="Script" path="res://scenes/game/game_main.gd" id="1_game_main"]
+
+[node name="GameMain" type="Node2D"]
+script = ExtResource("1_game_main")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.086, 0.086, 0.114, 1)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="TimeLabel" type="Label" parent="UILayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "第1年 第1季度 第1月"
+horizontal_alignment = 1
+
+[node name="PlayerInfo" type="Panel" parent="UILayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 280.0
+offset_bottom = 180.0
+
+[node name="NameLabel" type="Label" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 250.0
+offset_bottom = 35.0
+text = "打工人"
+
+[node name="RankLabel" type="Label" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 250.0
+offset_bottom = 65.0
+text = "职级: P3"
+
+[node name="HPBar" type="ProgressBar" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 250.0
+offset_bottom = 95.0
+max_value = 100.0
+value = 100.0
+
+[node name="HPLabel" type="Label" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 95.0
+offset_right = 100.0
+offset_bottom = 115.0
+theme_override_font_sizes/font_size = 14
+text = "HP: 100/100"
+
+[node name="KPILabel" type="Label" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 115.0
+offset_right = 150.0
+offset_bottom = 140.0
+text = "KPI: 0"
+
+[node name="SalaryLabel" type="Label" parent="UILayer/PlayerInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 140.0
+offset_right = 150.0
+offset_bottom = 165.0
+text = "薪资: 7000"
+
+[node name="ActionPanel" type="Panel" parent="UILayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -150.0
+offset_right = 400.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionLabel" type="Label" parent="UILayer/ActionPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "行动"
+
+[node name="MessageLog" type="RichTextLabel" parent="UILayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -170.0
+grow_horizontal = 0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=#888888]系统[/color] 游戏初始化完成...\n"
+scroll_following = true
+
+[node name="HelpLabel" type="Label" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = -30.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "ESC - 暂停菜单"
+horizontal_alignment = 2

@@ -1,0 +1,35 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot 4 标准忽略
+# 导入缓存
+.import/
+.godot/
+*.tmp
+
+# 编译输出
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 导出模板
+export_presets.cfg
+export.cfg
+
+# 用户特定设置
+*.user
+
+# 日志和崩溃报告
+*.log
+crash_*
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
