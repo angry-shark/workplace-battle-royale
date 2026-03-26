@@ -1,0 +1,37 @@
+{
+	"cards": [
+		{
+			"id": "work_normal",
+			"name": "正常上班",
+			"type": "work",
+			"description": "按部就班完成工作，绩效+基础值，HP-5",
+			"effects": {
+				"kpi_multiplier": 1.0,
+				"hp_cost": 5
+			},
+			"cost": 0
+		},
+		{
+			"id": "work_overtime",
+			"name": "拼命加班",
+			"type": "work",
+			"description": "绩效+150%，HP-15",
+			"effects": {
+				"kpi_multiplier": 1.5,
+				"hp_cost": 15
+			},
+			"cost": 0
+		},
+		{
+			"id": "work_slack",
+			"name": "划水摸鱼",
+			"type": "work",
+			"description": "绩效-30%，HP+5",
+			"effects": {
+				"kpi_multiplier": 0.7,
+				"hp_gain": 5
+			},
+			"cost": 0
+		}
+	]
+}

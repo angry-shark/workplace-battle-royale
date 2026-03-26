@@ -1,0 +1,33 @@
+{
+	"id": "finance",
+	"name": "财务",
+	"name_en": "Finance",
+	"description": "薪资加成，资源控制，保守稳健",
+	"color": "#34495e",
+	"base_hp": 120,
+	"base_kpi": 10,
+	"salary_bonus": 1.2,
+	"shop_discount": 0.9,
+	"special_skills": [
+		{
+			"id": "skill_budget",
+			"name": "预算审批",
+			"description": "本月工资额外+30%"
+		},
+		{
+			"id": "skill_audit",
+			"name": "审计威胁",
+			"description": "目标本月工资-50%，30%暴露"
+		},
+		{
+			"id": "skill_early_warning",
+			"name": "财务预警",
+			"description": "本季度提前知道各部门淘汰名额分配"
+		}
+	],
+	"passive": {
+		"name": "精打细算",
+		"buff": "每月工资+20%，商店商品价格-15%",
+		"debuff": "基础绩效-5%，无法使用高风险策略卡"
+	}
+}

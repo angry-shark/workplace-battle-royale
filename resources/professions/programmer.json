@@ -1,0 +1,34 @@
+{
+	"id": "programmer",
+	"name": "程序员",
+	"name_en": "Programmer",
+	"description": "高绩效产出，低社交，容易 burnout",
+	"color": "#2ecc71",
+	"base_hp": 100,
+	"base_kpi": 15,
+	"kpi_bonus": 1.5,
+	"social_penalty": 0.7,
+	"burnout_risk": 0.15,
+	"special_skills": [
+		{
+			"id": "skill_overtime",
+			"name": "加班狂魔",
+			"description": "本月绩效+50%，HP-10"
+		},
+		{
+			"id": "skill_refactor",
+			"name": "代码重构",
+			"description": "清除所有负面状态，HP+10"
+		},
+		{
+			"id": "skill_tech_debt",
+			"name": "技术债务",
+			"description": "陷害成功率+30%，目标仅限非技术岗"
+		}
+	],
+	"passive": {
+		"name": "码农体质",
+		"buff": "每月基础绩效+15%",
+		"debuff": "每月基础HP消耗+3，社交类策略卡效果-20%"
+	}
+}

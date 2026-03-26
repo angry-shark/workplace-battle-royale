@@ -1,0 +1,61 @@
+{
+	"cards": [
+		{
+			"id": "trap_shift_blame",
+			"name": "甩锅",
+			"type": "trap",
+			"subtype": "frame",
+			"description": "指定目标绩效-15%，50%暴露",
+			"effects": {
+				"target_kpi": -0.15,
+				"expose_chance": 0.5
+			},
+			"cost": 200
+		},
+		{
+			"id": "trap_report",
+			"name": "打小报告",
+			"type": "trap",
+			"subtype": "damage",
+			"description": "指定目标HP-10，30%暴露",
+			"effects": {
+				"target_hp": -10,
+				"expose_chance": 0.3
+			},
+			"cost": 250
+		},
+		{
+			"id": "trap_steal_credit",
+			"name": "抢功劳",
+			"type": "trap",
+			"subtype": "steal",
+			"description": "窃取目标本月的30%绩效",
+			"effects": {
+				"steal_kpi_ratio": 0.3
+			},
+			"cost": 400
+		},
+		{
+			"id": "trap_rumor",
+			"name": "造谣",
+			"type": "trap",
+			"subtype": "disable",
+			"description": "指定目标下月无法使用联盟卡",
+			"effects": {
+				"disable_alliance": true
+			},
+			"cost": 300
+		},
+		{
+			"id": "trap_pitfall",
+			"name": "挖坑",
+			"type": "trap",
+			"subtype": "debuff",
+			"description": "指定目标下月工作卡效果-50%",
+			"effects": {
+				"work_card_debuff": 0.5
+			},
+			"cost": 350
+		}
+	]
+}

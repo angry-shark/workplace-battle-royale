@@ -1,0 +1,63 @@
+{
+	"game": {
+		"title": "职场大逃杀",
+		"subtitle": "最后打工人",
+		"version": "版本 {version}"
+	},
+	"menu": {
+		"start": "开始游戏",
+		"load": "继续游戏",
+		"settings": "设置",
+		"quit": "退出",
+		"select_scale": "选择对局规模",
+		"scale_debug": "调试模式：5人（约5分钟）- 用于快速测试",
+		"scale_quick": "快速模式：20人（约20分钟）",
+		"scale_standard": "标准模式：50人（约40分钟）",
+		"scale_epic": "史诗模式：100人（约90分钟）"
+	},
+	"game_ui": {
+		"hp": "生命值",
+		"kpi": "绩效",
+		"salary": "薪资",
+		"rank": "职级",
+		"hex": "海克斯",
+		"cards": "手牌",
+		"shop": "商店",
+		"allies": "盟友",
+		"turn": "第{turn}回合",
+		"time_format": "第{year}年 第{quarter}季度 第{month}月"
+	},
+	"professions": {
+		"programmer": "程序员",
+		"hr": "HR",
+		"finance": "财务",
+		"operations": "运营",
+		"sales": "销售"
+	},
+	"phases": {
+		"hp_deduction": "健康度扣除",
+		"action": "行动阶段",
+		"work": "工作产出",
+		"salary": "薪资结算",
+		"shop": "商店购买",
+		"quarter_settlement": "季度结算"
+	},
+	"messages": {
+		"game_start": "游戏开始！欢迎来到《职场大逃杀》",
+		"game_goal": "你的目标：在HC紧缩中生存下来，成为最后的赢家！",
+		"player_eliminated": "{name}被淘汰了（{reason}）",
+		"promotion": "{name}晋升至P{rank}！",
+		"quarter_end": "第{quarter}季度结算",
+		"victory": "恭喜！你赢得了胜利！",
+		"defeat": "你被淘汰了！"
+	},
+	"buttons": {
+		"confirm": "确认",
+		"cancel": "取消",
+		"close": "关闭",
+		"next": "下一回合",
+		"skip": "跳过",
+		"use_card": "使用卡牌",
+		"buy": "购买"
+	}
+}

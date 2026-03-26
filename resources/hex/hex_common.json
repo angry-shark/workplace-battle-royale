@@ -1,0 +1,60 @@
+{
+	"hexes": [
+		{
+			"id": "hex_paid_shit",
+			"name": "带薪拉屎",
+			"rarity": "common",
+			"type": "survival",
+			"description": "每月额外恢复5HP，绩效-2%",
+			"effects": {
+				"hp_recovery": 5,
+				"kpi_penalty": -0.02
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_remote_work",
+			"name": "远程办公",
+			"rarity": "common",
+			"type": "survival",
+			"description": "每月基础HP消耗-2",
+			"effects": {
+				"hp_cost_reduction": 2
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_ppt_god",
+			"name": "PPT之神",
+			"rarity": "common",
+			"type": "performance",
+			"description": "每月绩效+8%",
+			"effects": {
+				"kpi_bonus": 0.08
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_gossip_radar",
+			"name": "八卦雷达",
+			"rarity": "common",
+			"type": "strategy",
+			"description": "每月随机得知1名同事的HP或绩效",
+			"effects": {
+				"info_reveal": 1
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_side_income",
+			"name": "副业收入",
+			"rarity": "common",
+			"type": "economy",
+			"description": "每月额外获得10%工资",
+			"effects": {
+				"salary_bonus": 0.1
+			},
+			"duration": "quarter"
+		}
+	]
+}

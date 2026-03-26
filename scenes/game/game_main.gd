@@ -41,6 +41,7 @@ func _ready():
 func _initialize_game() -> void:
 	# 创建回合管理器
 	turn_manager = TurnManager.new()
+	turn_manager.name = "TurnManager"
 	add_child(turn_manager)
 	
 	# 连接回合管理器信号

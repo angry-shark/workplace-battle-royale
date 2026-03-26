@@ -1,0 +1,45 @@
+{
+	"cards": [
+		{
+			"id": "alliance_form",
+			"name": "结盟",
+			"type": "alliance",
+			"description": "与目标形成联盟，互相不可陷害",
+			"effects": {
+				"form_alliance": true
+			},
+			"cost": 300
+		},
+		{
+			"id": "alliance_betray",
+			"name": "背叛",
+			"type": "alliance",
+			"description": "解除联盟，并对前盟友造成双倍伤害",
+			"effects": {
+				"break_alliance": true,
+				"double_damage": true
+			},
+			"cost": 200
+		},
+		{
+			"id": "alliance_help",
+			"name": "互助",
+			"type": "alliance",
+			"description": "联盟成员本月绩效+10%",
+			"effects": {
+				"alliance_kpi_bonus": 0.1
+			},
+			"cost": 150
+		},
+		{
+			"id": "alliance_unite",
+			"name": "共进退",
+			"type": "alliance",
+			"description": "联盟成员本季度缩圈时，排名+1",
+			"effects": {
+				"rank_protection": 1
+			},
+			"cost": 500
+		}
+	]
+}

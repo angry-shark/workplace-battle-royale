@@ -1,0 +1,33 @@
+{
+	"id": "operations",
+	"name": "运营",
+	"name_en": "Operations",
+	"description": "全能发展，适应性强，无明显弱点",
+	"color": "#e67e22",
+	"base_hp": 115,
+	"base_kpi": 12,
+	"adaptability": true,
+	"extra_card_slot": 1,
+	"special_skills": [
+		{
+			"id": "skill_data_optimize",
+			"name": "数据优化",
+			"description": "本月绩效+20%，可选择HP+5或工资+20%"
+		},
+		{
+			"id": "skill_cross_dept",
+			"name": "跨部门协作",
+			"description": "可同时与2人结盟（不互斥）"
+		},
+		{
+			"id": "skill_insight",
+			"name": "用户洞察",
+			"description": "查看本季度所有海克斯选项（抽取前）"
+		}
+	],
+	"passive": {
+		"name": "全能选手",
+		"buff": "无显著短板，策略卡上限+1",
+		"debuff": "无显著优势，无法获得职业专属传说海克斯"
+	}
+}

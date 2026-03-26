@@ -56,18 +56,10 @@ func _on_quit_pressed() -> void:
 	print("Quit game")
 	get_tree().quit()
 
-func _start_game_with_default() -> void:
-	# 使用默认设置开始游戏
-	PlayerData.initialize_new_game(
-		"打工人",
-		Config.Profession.PROGRAMMER,
-		Config.Rank.P3
-	)
-	GameManager.start_game()
-
 ## 显示游戏规模选择对话框
 func _show_scale_selection_dialog() -> void:
 	var dialog = AcceptDialog.new()
+	dialog.name = "ScaleSelectionDialog"
 	dialog.title = "选择对局规模"
 	dialog.dialog_text = "请选择游戏规模：\n\n" \
 		+ "调试模式：5人（约5分钟）- 用于快速测试\n" \
@@ -92,7 +84,8 @@ func _show_scale_selection_dialog() -> void:
 			"epic":
 				GameManager.set_game_scale(GameManager.GameScale.EPIC)
 		dialog.queue_free()
-		_start_game_with_default()
+		# 跳转到角色选择场景
+		get_tree().change_scene_to_file("res://scenes/character_select/character_select.tscn")
 	)
 	
 	add_child(dialog)
@@ -101,6 +94,7 @@ func _show_scale_selection_dialog() -> void:
 func _show_message(text: String) -> void:
 	# 简单的消息提示
 	var dialog = AcceptDialog.new()
+	dialog.name = "MessageDialog"
 	dialog.title = "提示"
 	dialog.dialog_text = text
 	add_child(dialog)

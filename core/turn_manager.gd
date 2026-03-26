@@ -90,7 +90,7 @@ func _end_turn() -> void:
 	# 更新存活玩家数据
 	for player in players:
 		if player.is_alive:
-			player.current_game_stats["turns_survived"] += 1
+			player.game_stats["turns_survived"] += 1
 	
 	turn_ended.emit(current_turn)
 	EventBus.turn_ended.emit(current_turn)

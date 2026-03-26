@@ -55,6 +55,9 @@ func _init(p_id: int, p_name: String, p_profession: int, p_rank: int, ai: bool =
 	rank = p_rank
 	is_ai = ai
 	
+	# 设置节点名称（避免空名称警告）
+	name = "Player_%d_%s" % [p_id, p_name]
+	
 	# 初始化属性
 	max_hp = Profession.calculate_hp(profession, rank)
 	current_hp = max_hp

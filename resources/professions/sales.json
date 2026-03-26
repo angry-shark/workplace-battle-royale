@@ -1,0 +1,33 @@
+{
+	"id": "sales",
+	"name": "销售",
+	"name_en": "Sales",
+	"description": "高风险高回报，社交主导，抗压能力强",
+	"color": "#e74c3c",
+	"base_hp": 105,
+	"base_kpi": 20,
+	"kpi_variance": 0.3,
+	"social_bonus": 1.4,
+	"special_skills": [
+		{
+			"id": "skill_big_deal",
+			"name": "大单签约",
+			"description": "50%概率绩效+100%，50%绩效-20%"
+		},
+		{
+			"id": "skill_client_resource",
+			"name": "客户资源",
+			"description": "抢夺目标本季度20%绩效"
+		},
+		{
+			"id": "skill_entertain",
+			"name": "应酬喝酒",
+			"description": "HP-15，立即获得300工资"
+		}
+	],
+	"passive": {
+		"name": "业绩为王",
+		"buff": "每月绩效浮动范围±50%，社交类策略卡效果+25%",
+		"debuff": "基础HP消耗+2，绩效低于平均值时额外-10%"
+	}
+}
