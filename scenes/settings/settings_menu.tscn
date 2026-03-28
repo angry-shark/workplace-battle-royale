@@ -1,0 +1,191 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8yvxg3ulq3b"]
+
+[ext_resource type="Script" path="res://scenes/settings/settings_menu.gd" id="1_settings"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.102, 0.102, 0.18, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "设置"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="音频" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 780.0
+offset_bottom = 350.0
+theme_override_constants/separation = 20
+
+[node name="MasterVolume" type="VBoxContainer" parent="TabContainer/音频"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/音频/MasterVolume"]
+layout_mode = 2
+text = "主音量"
+
+[node name="MasterSlider" type="HSlider" parent="TabContainer/音频/MasterVolume"]
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+
+[node name="BGMVolume" type="VBoxContainer" parent="TabContainer/音频"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/音频/BGMVolume"]
+layout_mode = 2
+text = "背景音乐"
+
+[node name="BGMSlider" type="HSlider" parent="TabContainer/音频/BGMVolume"]
+layout_mode = 2
+max_value = 100.0
+value = 80.0
+
+[node name="SFXVolume" type="VBoxContainer" parent="TabContainer/音频"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/音频/SFXVolume"]
+layout_mode = 2
+text = "游戏音效"
+
+[node name="SFXSlider" type="HSlider" parent="TabContainer/音频/SFXVolume"]
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+
+[node name="UIVolume" type="VBoxContainer" parent="TabContainer/音频"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/音频/UIVolume"]
+layout_mode = 2
+text = "UI音效"
+
+[node name="UISlider" type="HSlider" parent="TabContainer/音频/UIVolume"]
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+
+[node name="显示" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 780.0
+offset_bottom = 350.0
+theme_override_constants/separation = 20
+
+[node name="FullscreenCheck" type="CheckBox" parent="TabContainer/显示"]
+layout_mode = 2
+text = "全屏模式"
+
+[node name="ResolutionLabel" type="Label" parent="TabContainer/显示"]
+layout_mode = 2
+text = "分辨率"
+
+[node name="ResolutionOption" type="OptionButton" parent="TabContainer/显示"]
+layout_mode = 2
+
+[node name="游戏" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 780.0
+offset_bottom = 350.0
+theme_override_constants/separation = 20
+
+[node name="LanguageLabel" type="Label" parent="TabContainer/游戏"]
+layout_mode = 2
+text = "语言"
+
+[node name="LanguageOption" type="OptionButton" parent="TabContainer/游戏"]
+layout_mode = 2
+
+[node name="AutoSaveCheck" type="CheckBox" parent="TabContainer/游戏"]
+layout_mode = 2
+text = "启用自动存档"
+
+[node name="SaveButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -100.0
+offset_right = -200.0
+offset_bottom = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "保存"
+
+[node name="ResetButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -100.0
+offset_right = -60.0
+offset_bottom = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "恢复默认"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = -60.0
+grow_vertical = 0
+text = "返回"
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]

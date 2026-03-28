@@ -1,0 +1,51 @@
+{
+	"hexes": [
+		{
+			"id": "hex_laydown_immortal",
+			"name": "躺平仙人",
+			"rarity": "legendary",
+			"type": "survival",
+			"description": "HP不会低于1，但绩效始终为0",
+			"effects": {
+				"hp_min": 1,
+				"kpi_fixed": 0
+			},
+			"duration": "permanent"
+		},
+		{
+			"id": "hex_chosen_worker",
+			"name": "天选打工人",
+			"rarity": "legendary",
+			"type": "performance",
+			"description": "绩效始终排名前10%，无法被陷害",
+			"effects": {
+				"rank_top_percent": 10,
+				"trap_immunity": 1.0
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_workplace_ghost",
+			"name": "职场幽灵",
+			"rarity": "legendary",
+			"type": "strategy",
+			"description": "你的行动不会出现在月度报告中",
+			"effects": {
+				"action_hidden": true,
+				"expose_chance_reduction": 1.0
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_wealth_freedom",
+			"name": "财富自由",
+			"rarity": "legendary",
+			"type": "economy",
+			"description": "工资永久+50%，可直接购买离职卡获胜",
+			"effects": {
+				"salary_bonus": 0.5
+			},
+			"duration": "permanent"
+		}
+	]
+}

@@ -55,6 +55,18 @@
 				"salary_bonus": 0.1
 			},
 			"duration": "quarter"
+		},
+		{
+			"id": "hex_early_bird",
+			"name": "早起的鸟儿",
+			"rarity": "common",
+			"type": "performance",
+			"description": "前3个月绩效+15%",
+			"effects": {
+				"early_kpi_bonus": 0.15,
+				"early_turns": 3
+			},
+			"duration": "quarter"
 		}
 	]
 }

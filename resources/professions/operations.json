@@ -29,5 +29,25 @@
 		"name": "全能选手",
 		"buff": "无显著短板，策略卡上限+1",
 		"debuff": "无显著优势，无法获得职业专属传说海克斯"
-	}
+	},
+	"exclusive_hexes": [
+		{
+			"id": "hex_jack_of_all",
+			"name": "多面手",
+			"rarity": "common",
+			"description": "策略卡上限+1"
+		},
+		{
+			"id": "hex_process_optimize",
+			"name": "流程优化",
+			"rarity": "rare",
+			"description": "每月行动次数+1"
+		},
+		{
+			"id": "hex_project_manager",
+			"name": "项目管理",
+			"rarity": "epic",
+			"description": "可同时拥有3个联盟关系"
+		}
+	]
 }

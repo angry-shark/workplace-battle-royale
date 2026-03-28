@@ -56,6 +56,30 @@
 				"work_card_debuff": 0.5
 			},
 			"cost": 350
+		},
+		{
+			"id": "trap_salary_cut",
+			"name": "降薪威胁",
+			"type": "trap",
+			"subtype": "economic",
+			"description": "指定目标下月工资-30%，20%暴露",
+			"effects": {
+				"target_salary": -0.3,
+				"expose_chance": 0.2
+			},
+			"cost": 450
+		},
+		{
+			"id": "trap_isolate",
+			"name": "孤立排挤",
+			"type": "trap",
+			"subtype": "social",
+			"description": "解除目标所有联盟关系，40%暴露",
+			"effects": {
+				"break_all_alliances": true,
+				"expose_chance": 0.4
+			},
+			"cost": 500
 		}
 	]
 }

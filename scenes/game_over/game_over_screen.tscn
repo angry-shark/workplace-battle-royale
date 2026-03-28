@@ -1,0 +1,153 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8yvxg3ulq3c"]
+
+[ext_resource type="Script" path="res://scenes/game_over/game_over_screen.gd" id="1_game_over"]
+
+[node name="GameOverScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_game_over")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.051, 0.051, 0.086, 1)
+
+[node name="ResultIcon" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 40.0
+offset_right = 50.0
+offset_bottom = 120.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "🏆"
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 130.0
+offset_right = 200.0
+offset_bottom = 180.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "胜利！"
+horizontal_alignment = 1
+
+[node name="StatsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 400.0
+offset_bottom = -100.0
+grow_vertical = 2
+
+[node name="StatsTitle" type="Label" parent="StatsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 15.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "战后统计"
+horizontal_alignment = 1
+
+[node name="StatsContainer" type="VBoxContainer" parent="StatsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 55.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="AchievementsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = 200.0
+offset_right = -60.0
+offset_bottom = -100.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="AchievementTitle" type="Label" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 15.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "成就解锁"
+horizontal_alignment = 1
+
+[node name="AchievementList" type="VBoxContainer" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 55.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 20.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "继续"
+
+[node name="SaveReplayButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -80.0
+offset_right = 180.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "保存战报"
+
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="SaveReplayButton" to="." method="_on_save_replay_pressed"]

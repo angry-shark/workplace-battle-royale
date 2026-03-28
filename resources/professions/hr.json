@@ -29,5 +29,31 @@
 		"name": "人事权柄",
 		"buff": "每月可查看2名同事完整状态，陷害成功率+15%",
 		"debuff": "基础绩效-10%，被所有人记恨（成为陷害目标的概率+20%）"
-	}
+	},
+	"exclusive_hexes": [
+		{
+			"id": "hex_attendance_expert",
+			"name": "考勤专家",
+			"rarity": "common",
+			"description": "每月额外查看1人状态"
+		},
+		{
+			"id": "hex_recruit_privilege",
+			"name": "招聘特权",
+			"rarity": "rare",
+			"description": "联盟邀请无法被拒绝"
+		},
+		{
+			"id": "hex_layoff_list",
+			"name": "裁员名单",
+			"rarity": "epic",
+			"description": "每季度可额外淘汰1人"
+		},
+		{
+			"id": "hex_hr_director",
+			"name": "人事总监",
+			"rarity": "legendary",
+			"description": "每月可查看所有人状态，陷害免疫50%"
+		}
+	]
 }

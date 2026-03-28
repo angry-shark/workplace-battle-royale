@@ -41,16 +41,15 @@ func _on_start_pressed() -> void:
 	_show_scale_selection_dialog()
 
 func _on_load_pressed() -> void:
-	print("Load game")
-	if SaveManager.load_game():
-		GameManager.start_game()
-	else:
-		_show_message("加载存档失败")
+	print("Load game menu")
+	# 进入读档菜单
+	get_tree().change_scene_to_file("res://scenes/save_load/save_load_menu.tscn")
 
 func _on_settings_pressed() -> void:
 	print("Open settings")
-	# TODO: 打开设置界面
-	_show_message("设置功能开发中...")
+	AudioManager.play_button_click()
+	# 打开设置菜单
+	get_tree().change_scene_to_file("res://scenes/settings/settings_menu.tscn")
 
 func _on_quit_pressed() -> void:
 	print("Quit game")

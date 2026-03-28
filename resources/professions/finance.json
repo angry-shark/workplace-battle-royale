@@ -29,5 +29,31 @@
 		"name": "精打细算",
 		"buff": "每月工资+20%，商店商品价格-15%",
 		"debuff": "基础绩效-5%，无法使用高风险策略卡"
-	}
+	},
+	"exclusive_hexes": [
+		{
+			"id": "hex_conservative",
+			"name": "理财保守",
+			"rarity": "common",
+			"description": "工资+10%，无法购买股票类商品"
+		},
+		{
+			"id": "hex_audit_expert",
+			"name": "审计专家",
+			"rarity": "rare",
+			"description": "陷害目标时，可额外窃取20%工资"
+		},
+		{
+			"id": "hex_budget_director",
+			"name": "预算主管",
+			"rarity": "epic",
+			"description": "每月工资+40%，商店-25%"
+		},
+		{
+			"id": "hex_cfo",
+			"name": "财务总监",
+			"rarity": "legendary",
+			"description": "每月工资+60%，可查看所有人工资"
+		}
+	]
 }

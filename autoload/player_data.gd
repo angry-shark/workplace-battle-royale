@@ -27,6 +27,9 @@ var hexes: Array[String] = []
 var hand_cards: Array[String] = []
 var max_hand_size: int = 10
 
+# 盟友
+var allies: Array[int] = []  # 盟友玩家ID列表
+
 # 统计数据
 var stats: Dictionary = {
 	"games_played": 0,
@@ -66,6 +69,7 @@ func _reset_current_game_data() -> void:
 	elimination_reason = ""
 	hexes.clear()
 	hand_cards.clear()
+	allies.clear()
 	current_game_stats = {
 		"turns_survived": 0,
 		"kpi_earned": 0,
@@ -155,6 +159,20 @@ func remove_card(card_id: String) -> bool:
 		hand_cards.erase(card_id)
 		return true
 	return false
+
+## 添加盟友
+func add_ally(ally_id: int) -> void:
+	if not allies.has(ally_id):
+		allies.append(ally_id)
+
+## 移除盟友
+func remove_ally(ally_id: int) -> void:
+	if allies.has(ally_id):
+		allies.erase(ally_id)
+
+## 检查是否是盟友
+func is_allied_with(other_id: int) -> bool:
+	return allies.has(other_id)
 
 ## 死亡/淘汰
 func die(reason: String) -> void:

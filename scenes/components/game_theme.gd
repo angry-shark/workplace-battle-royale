@@ -131,7 +131,7 @@ static func get_profession_color(profession: int) -> Color:
 			return COLORS.text_primary
 
 # ========== 样式预设 ==========
-static func apply_panel_style(panel: PanelContainer) -> void:
+static func apply_panel_style(panel: Control) -> void:
 	var style = StyleBoxFlat.new()
 	style.bg_color = COLORS.bg_panel
 	style.corner_radius_top_left = 8

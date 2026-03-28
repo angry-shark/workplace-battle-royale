@@ -1,0 +1,64 @@
+{
+	"hexes": [
+		{
+			"id": "hex_stress_king",
+			"name": "抗压王者",
+			"rarity": "epic",
+			"type": "survival",
+			"description": "HP低于30时，每月恢复10HP",
+			"effects": {
+				"low_hp_recovery": 10,
+				"low_hp_threshold": 30
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_elite_halo",
+			"name": "嫡系光环",
+			"rarity": "epic",
+			"type": "performance",
+			"description": "绩效+25%，被陷害时50%免疫",
+			"effects": {
+				"kpi_bonus": 0.25,
+				"trap_immunity": 0.5
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_double_agent",
+			"name": "双面间谍",
+			"rarity": "epic",
+			"type": "strategy",
+			"description": "可以同时与2个对立联盟保持关系",
+			"effects": {
+				"max_allies": 2,
+				"betray_immunity": true
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_stock_guru",
+			"name": "股票达人",
+			"rarity": "epic",
+			"type": "economy",
+			"description": "每月有30%概率工资翻倍，20%概率归零",
+			"effects": {
+				"salary_double_chance": 0.3,
+				"salary_zero_chance": 0.2
+			},
+			"duration": "quarter"
+		},
+		{
+			"id": "hex_poaching_expert",
+			"name": "挖角专家",
+			"rarity": "epic",
+			"type": "economy",
+			"description": "可花费工资让其他部门1人下月绩效-20%",
+			"effects": {
+				"poach_cost": 300,
+				"poach_kpi_penalty": 0.2
+			},
+			"duration": "quarter"
+		}
+	]
+}

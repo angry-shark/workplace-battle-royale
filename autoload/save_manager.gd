@@ -77,7 +77,7 @@ func save_game(slot_name: String = "auto") -> bool:
 
 ## 加载游戏存档
 func load_game(slot_name: String = "auto") -> bool:
-	var filename = SAVE_DIR + slot_name + "*.json"
+	var filename = SAVE_DIR + slot_name + ".json"
 	
 	if not FileAccess.file_exists(filename):
 		print("Save file not found: " + filename)
@@ -105,6 +105,7 @@ func _collect_save_data() -> Dictionary:
 		"version": Config.VERSION,
 		"timestamp": Time.get_datetime_string_from_system(),
 		"game_seed": GameManager.game_seed,
+		"game_scale": GameManager.game_scale,
 		"game_state": {
 			"turn": GameManager.current_turn,
 			"month": GameManager.current_month,
@@ -118,11 +119,13 @@ func _collect_save_data() -> Dictionary:
 			"hp": PlayerData.current_hp,
 			"max_hp": PlayerData.max_hp,
 			"kpi": PlayerData.current_kpi,
+			"current_kpi": PlayerData.current_kpi,
 			"salary": PlayerData.current_salary,
 			"total_salary": PlayerData.total_salary,
 			"is_alive": PlayerData.is_alive,
 			"hexes": PlayerData.hexes,
-			"hand_cards": PlayerData.hand_cards
+			"hand_cards": PlayerData.hand_cards,
+			"allies": PlayerData.allies
 		}
 	}
 	return data
@@ -132,6 +135,10 @@ func _apply_save_data(data: Dictionary) -> void:
 	if data.has("game_seed"):
 		GameManager.game_seed = data.game_seed
 		seed(data.game_seed)
+	
+	if data.has("game_scale"):
+		GameManager.game_scale = data.game_scale
+		GameManager.set_game_scale(data.game_scale)
 	
 	if data.has("game_state"):
 		GameManager.current_turn = data.game_state.get("turn", 0)
@@ -146,12 +153,13 @@ func _apply_save_data(data: Dictionary) -> void:
 		PlayerData.rank = p.get("rank", Config.Rank.P1)
 		PlayerData.current_hp = p.get("hp", Config.INITIAL_HP)
 		PlayerData.max_hp = p.get("max_hp", Config.INITIAL_HP)
-		PlayerData.current_kpi = p.get("kpi", 0)
+		PlayerData.current_kpi = p.get("current_kpi", p.get("kpi", 0))
 		PlayerData.current_salary = p.get("salary", 0)
 		PlayerData.total_salary = p.get("total_salary", 0)
 		PlayerData.is_alive = p.get("is_alive", true)
-		PlayerData.hexes = p.get("hexes", [])
-		PlayerData.hand_cards = p.get("hand_cards", [])
+		PlayerData.hexes.assign(p.get("hexes", []))
+		PlayerData.hand_cards.assign(p.get("hand_cards", []))
+		PlayerData.allies.assign(p.get("allies", []))
 
 ## 获取所有存档槽
 func get_save_slots() -> Array:

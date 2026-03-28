@@ -37,29 +37,11 @@ func _setup_profession_buttons():
 	for child in profession_list.get_children():
 		child.queue_free()
 	
-	# 创建职业按钮
-	var professions = [
-		{"id": Config.Profession.PROGRAMMER, "name": "程序员", "icon": "💻"},
-		{"id": Config.Profession.HR, "name": "HR", "icon": "📋"},
-		{"id": Config.Profession.FINANCE, "name": "财务", "icon": "💰"},
-		{"id": Config.Profession.OPERATIONS, "name": "运营", "icon": "📊"},
-		{"id": Config.Profession.SALES, "name": "销售", "icon": "📞"}
-	]
-	
-	for prof in professions:
-		var btn = Button.new()
-		btn.name = "ProfButton_" + str(prof.id)
-		btn.text = prof.icon + " " + prof.name
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.toggle_mode = true
-		btn.button_pressed = (prof.id == _selected_profession)
-		
-		# 设置按钮样式
-		var color = GameTheme.get_profession_color(prof.id)
-		_apply_profession_button_style(btn, color, prof.id == _selected_profession)
-		
-		btn.pressed.connect(_on_profession_selected.bind(prof.id))
-		profession_list.add_child(btn)
+	# 创建头像选择器
+	var avatar_selector = load("res://scenes/character_select/avatar_selector.gd").new()
+	avatar_selector.name = "AvatarSelector"
+	avatar_selector.profession_selected.connect(_on_profession_selected)
+	profession_list.add_child(avatar_selector)
 
 func _apply_profession_button_style(button: Button, color: Color, is_selected: bool):
 	var normal_style = StyleBoxFlat.new()
@@ -108,14 +90,6 @@ func _setup_rank_selector():
 
 func _on_profession_selected(profession_id: int):
 	_selected_profession = profession_id
-	
-	# 更新按钮样式
-	for child in profession_list.get_children():
-		if child is Button:
-			var prof_id = int(child.name.split("_")[1])
-			var color = GameTheme.get_profession_color(prof_id)
-			_apply_profession_button_style(child, color, prof_id == _selected_profession)
-	
 	_update_info_panel()
 
 func _on_rank_selected(index: int):

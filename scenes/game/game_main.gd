@@ -4,14 +4,17 @@ extends Node2D
 
 # 游戏组件
 var turn_manager: TurnManager
-var players: Array = []
+var players: Array[Player] = []
+var ai_controllers: Dictionary = {}  # player_id -> AIController
 
 # UI 引用
 @onready var ui_layer: CanvasLayer = $UILayer
+@onready var player_info: Control = $UILayer/PlayerInfoPanel
+@onready var card_hand: CardHand = $UILayer/ActionPanel/CardHand
+@onready var hex_display: HexDisplay = $UILayer/HexDisplay
+@onready var message_log: MessageLog = $UILayer/MessageLog
 @onready var time_label: Label = $UILayer/TimeLabel
-@onready var player_info: Panel = $UILayer/PlayerInfo
-@onready var action_panel: Panel = $UILayer/ActionPanel
-@onready var message_log: RichTextLabel = $UILayer/MessageLog
+@onready var action_label: Label = $UILayer/ActionLabel
 
 func _ready():
 	print("GameMain loaded")
@@ -20,19 +23,17 @@ func _ready():
 	_initialize_game()
 	
 	# 连接事件
-	EventBus.player_hp_changed.connect(_on_player_hp_changed)
-	EventBus.player_kpi_changed.connect(_on_player_kpi_changed)
-	EventBus.player_eliminated.connect(_on_player_eliminated)
-	EventBus.turn_started.connect(_on_turn_started)
-	EventBus.ui_message.connect(_on_ui_message)
+	_connect_signals()
 	
 	# 更新UI
-	_update_time_display()
-	_update_player_info()
+	_update_ui()
 	
-	# 开始游戏
-	_log_message("游戏开始！欢迎来到《职场大逃杀》")
-	_log_message("你的目标：在HC紧缩中生存下来，成为最后的赢家！")
+	# 播放BGM
+	AudioManager.play_bgm("game_main")
+	
+	# 显示欢迎消息
+	message_log.log_important("游戏开始！欢迎来到《职场大逃杀》")
+	message_log.log_system("你的目标：在HC紧缩中生存下来，成为最后的赢家！")
 	
 	# 启动回合管理器
 	if turn_manager:
@@ -64,7 +65,7 @@ func _create_players() -> void:
 	)
 	players.append(human)
 	
-	# 创建AI玩家 (ID: 1-19)
+	# 创建AI玩家
 	var professions = Profession.get_all_professions()
 	var rank_distribution = LevelSystem.generate_rank_distribution(GameManager.total_players)
 	
@@ -75,112 +76,176 @@ func _create_players() -> void:
 		
 		var ai_player = Player.new(
 			i,
-			"同事%d" % i,
+			_get_ai_name(i, ai_type),
 			ai_profession,
 			ai_rank,
 			true
 		)
 		ai_player.ai_type = ai_type
 		players.append(ai_player)
+		
+		# 创建AI控制器
+		var ai_controller = AIController.new(ai_player)
+		ai_controller.name = "AIController_" + str(i)
+		add_child(ai_controller)
+		ai_controllers[i] = ai_controller
+	
+	# 为所有AI控制器设置玩家列表引用
+	for controller in ai_controllers.values():
+		controller.set_all_players(players)
 	
 	print("Created ", players.size(), " players")
 
-func _update_time_display() -> void:
-	if time_label:
-		time_label.text = GameManager.get_time_description()
+func _get_ai_name(index: int, ai_type: int) -> String:
+	var type_names = {
+		AIController.AIType.GRINDER: "卷王",
+		AIController.AIType.WELLNESS: "养生",
+		AIController.AIType.DECEIVER: "老六",
+		AIController.AIType.SOCIAL: "社交",
+		AIController.AIType.PROMOTION: "晋升狂",
+		AIController.AIType.LURKER: "潜伏"
+	}
+	var type_name = type_names.get(ai_type, "AI")
+	return "%s%d号" % [type_name, index]
 
-func _update_player_info() -> void:
-	if not player_info:
-		return
+func _connect_signals() -> void:
+	EventBus.player_hp_changed.connect(_on_player_hp_changed)
+	EventBus.player_kpi_changed.connect(_on_player_kpi_changed)
+	EventBus.player_eliminated.connect(_on_player_eliminated)
+	EventBus.turn_started.connect(_on_turn_started)
+	EventBus.phase_changed.connect(_on_phase_changed)
 	
+	# 手牌信号
+	card_hand.card_selected.connect(_on_card_selected)
+
+func _update_ui() -> void:
 	# 更新玩家信息面板
-	var hp_bar = player_info.get_node_or_null("HPBar")
-	var kpi_label = player_info.get_node_or_null("KPILabel")
-	var salary_label = player_info.get_node_or_null("SalaryLabel")
-	var rank_label = player_info.get_node_or_null("RankLabel")
+	player_info.update_player()
 	
-	if hp_bar:
-		hp_bar.max_value = PlayerData.max_hp
-		hp_bar.value = PlayerData.current_hp
+	# 更新时间显示
+	time_label.text = GameManager.get_time_description()
 	
-	if kpi_label:
-		kpi_label.text = "KPI: %d" % PlayerData.current_kpi
+	# 更新手牌
+	card_hand.set_hand(PlayerData.hand_cards)
 	
-	if salary_label:
-		salary_label.text = "薪资: %d" % PlayerData.current_salary
-	
-	if rank_label:
-		rank_label.text = "职级: %s" % PlayerData.get_rank_name()
+	# 更新海克斯
+	hex_display.set_hexes(PlayerData.hexes)
 
-func _log_message(text: String) -> void:
-	if message_log:
-		message_log.append_text("[color=#888888]%s[/color] %s\n" % [GameManager.get_time_description(), text])
-		message_log.scroll_to_line(message_log.get_line_count())
-	print(text)
+func _on_turn_manager_turn_started(turn: int, month: int, quarter: int) -> void:
+	message_log.log_important("第%d回合开始 - %s" % [turn, GameManager.get_time_description()])
+	
+	# 自动存档（每3回合）
+	if turn % 3 == 0:
+		if SaveManager.save_game("auto"):
+			print("Auto saved at turn ", turn)
 
-## 事件处理
+func _on_quarter_settled(quarter: int, eliminated: Array) -> void:
+	message_log.log_important("第%d季度结算 - 淘汰了%d人" % [quarter, eliminated.size()])
+
+func _on_turn_started(turn: int) -> void:
+	time_label.text = GameManager.get_time_description()
+
+func _on_phase_changed(phase: int) -> void:
+	var phase_names = {
+		Config.TurnPhase.HP_DEDUCTION: "健康度扣除",
+		Config.TurnPhase.ACTION: "行动阶段",
+		Config.TurnPhase.WORK_OUTPUT: "工作产出",
+		Config.TurnPhase.SALARY: "薪资结算",
+		Config.TurnPhase.SHOP: "商店阶段"
+	}
+	action_label.text = "当前阶段: " + phase_names.get(phase, "未知")
+
 func _on_player_hp_changed(player_id: int, current: int, max_hp: int) -> void:
-	if player_id == 0:  # 人类玩家
-		_update_player_info()
+	if player_id == 0:
+		player_info.update_player()
 
 func _on_player_kpi_changed(player_id: int, kpi: int) -> void:
 	if player_id == 0:
-		_update_player_info()
+		player_info.update_player()
 
 func _on_player_eliminated(player_id: int, reason: String) -> void:
 	if player_id == 0:
-		_log_message("[color=#ff0000]你被淘汰了！原因：%s[/color]" % reason)
 		_show_game_over(false)
-	else:
-		_log_message("同事%d被淘汰了 (%s)" % [player_id, reason])
 
-func _on_turn_started(turn: int) -> void:
-	_update_time_display()
-
-func _on_turn_manager_turn_started(turn: int, month: int, quarter: int) -> void:
-	_log_message("--- 第%d回合开始 ---" % turn)
-	_update_time_display()
-
-func _on_quarter_settled(quarter: int, eliminated: Array) -> void:
-	_log_message("=== 第%d季度结算 ===" % quarter)
-	_log_message("本季度淘汰人数: %d" % eliminated.size())
-	
-	if PlayerData.is_alive:
-		var progress = PlayerData.get_promotion_progress()
-		_log_message("你的晋升进度: %.0f%%" % (progress * 100))
-
-func _on_ui_message(message: String, type: int) -> void:
-	var color = "#ffffff"
-	match type:
-		EventBus.MessageType.WARNING:
-			color = "#ffaa00"
-		EventBus.MessageType.ERROR:
-			color = "#ff0000"
-		EventBus.MessageType.SUCCESS:
-			color = "#00ff00"
-		EventBus.MessageType.CRITICAL:
-			color = "#ff00ff"
-	
-	_log_message("[color=%s]%s[/color]" % [color, message])
+func _on_card_selected(card_id: String) -> void:
+	print("Selected card: ", card_id)
+	# TODO: 显示目标选择或直接使用
 
 func _show_game_over(victory: bool) -> void:
-	# TODO: 显示游戏结束界面
-	if victory:
-		_log_message("[color=#00ff00]恭喜！你赢得了胜利！[/color]")
-	else:
-		_log_message("[color=#ff0000]游戏结束[/color]")
+	# 切换到游戏结束画面
+	var result = 0 if victory else 1  # GameOverScreen.ResultType
 	
-	# 延迟返回主菜单
-	await get_tree().create_timer(3.0).timeout
-	GameManager.return_to_menu()
+	# 保存结果到GameManager供下个场景读取
+	GameManager.set_meta("game_result", result)
+	
+	# 延迟后切换场景
+	await get_tree().create_timer(2.0).timeout
+	get_tree().change_scene_to_file("res://scenes/game_over/game_over_screen.tscn")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		_toggle_pause()
+	
+	# F5快速保存
+	if event.is_action_pressed("debug_save"):
+		_quick_save()
+	
+	# F9快速读档
+	if event.is_action_pressed("debug_load"):
+		_quick_load()
+	
+	# 调试快捷键
+	if GameManager.is_debug_mode():
+		if event.is_action_pressed("debug_show_all_status"):
+			_debug_show_all_status()
+		elif event.is_action_pressed("debug_force_next_turn"):
+			_debug_force_next_turn()
+		elif event.is_action_pressed("debug_add_hp"):
+			PlayerData.modify_hp(50)
+		elif event.is_action_pressed("debug_add_money"):
+			PlayerData.total_salary += 1000
+
+func _quick_save() -> void:
+	if SaveManager.save_game("quicksave"):
+		message_log.log_success("游戏已快速保存 (F5)")
+		AudioManager.play_success()
+	else:
+		message_log.log_error("快速保存失败！")
+
+func _quick_load() -> void:
+	if SaveManager.has_save("quicksave"):
+		if SaveManager.load_game("quicksave"):
+			message_log.log_success("游戏已快速读取 (F9)")
+			AudioManager.play_success()
+			# 刷新UI
+			_update_ui()
+		else:
+			message_log.log_error("快速读档失败！")
+	else:
+		message_log.log_warning("没有快速存档！")
 
 func _toggle_pause() -> void:
 	if GameManager.current_state == Config.GameState.PLAYING:
 		GameManager.pause_game()
-		# TODO: 显示暂停菜单
+		message_log.log_system("游戏已暂停 (ESC继续, F5快速保存)")
 	elif GameManager.current_state == Config.GameState.PAUSED:
 		GameManager.resume_game()
+		message_log.log_system("游戏继续")
+
+func _debug_show_all_status() -> void:
+	message_log.log_system("=== 所有玩家状态 ===")
+	for player in players:
+		var status = "[%s] HP:%d/%d KPI:%d 工资:%d 职级:P%d %s" % [
+			player.player_name,
+			player.current_hp, player.max_hp,
+			player.current_kpi,
+			player.total_salary,
+			player.rank,
+			"[存活]" if player.is_alive else "[淘汰]"
+		]
+		message_log.log_message(status)
+
+func _debug_force_next_turn() -> void:
+	message_log.log_system("强制进入下一回合")
+	if turn_manager:
+		turn_manager._end_turn()

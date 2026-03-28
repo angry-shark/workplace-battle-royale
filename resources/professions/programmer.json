@@ -30,5 +30,31 @@
 		"name": "码农体质",
 		"buff": "每月基础绩效+15%",
 		"debuff": "每月基础HP消耗+3，社交类策略卡效果-20%"
-	}
+	},
+	"exclusive_hexes": [
+		{
+			"id": "hex_full_stack",
+			"name": "全栈工程师",
+			"rarity": "common",
+			"description": "绩效+10%，但HP消耗+2"
+		},
+		{
+			"id": "hex_open_source",
+			"name": "开源贡献者",
+			"rarity": "rare",
+			"description": "每月额外获得50工资"
+		},
+		{
+			"id": "hex_architect",
+			"name": "架构师思维",
+			"rarity": "epic",
+			"description": "工作卡效果+50%，HP消耗+5"
+		},
+		{
+			"id": "hex_tech_guru",
+			"name": "技术大牛",
+			"rarity": "legendary",
+			"description": "绩效始终+30%，免疫非技术岗陷害"
+		}
+	]
 }

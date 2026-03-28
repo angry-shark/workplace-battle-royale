@@ -23,8 +23,14 @@ var active_players: Array = []  # 存活玩家ID列表
 # 当前季度数据
 var current_quarter_kpi: Dictionary = {}  # player_id -> kpi
 
+# AI管理器
+var ai_manager: Node
+
 func _init():
 	print("TurnManager initialized")
+	ai_manager = load("res://core/ai/ai_manager.gd").new()
+	ai_manager.name = "AIManager"
+	add_child(ai_manager)
 
 ## 开始游戏
 func start_game(player_list: Array) -> void:
@@ -306,20 +312,38 @@ func _award_hexes() -> void:
 		# TODO: 根据稀有度随机发放Hex
 		pass
 
-## 处理AI行动
+## 处理AI行动（批量处理）
 func _process_ai_action(player) -> void:
-	# TODO: AI决策逻辑
+	# 通过AIManager批量处理所有AI
+	if not ai_manager.is_ai_processing():
+		# 获取GameMain中的ai_controllers
+		var game_main = get_parent()
+		if game_main and game_main.has_method("_create_players"):
+			var ai_controllers = game_main.ai_controllers if "ai_controllers" in game_main else {}
+			ai_manager.start_ai_turn(players, ai_controllers)
+		
+		# 等待AI处理完成
+		while ai_manager.is_ai_processing():
+			await get_tree().create_timer(0.1).timeout
+	
 	await get_tree().create_timer(0.1).timeout
 
 ## 处理玩家行动
 func _process_player_action(player) -> void:
-	# TODO: 等待玩家UI输入
-	await get_tree().create_timer(0.5).timeout
+	# 等待玩家UI输入
+	EventBus.show_message("请选择行动", EventBus.MessageType.INFO)
+	
+	# 给玩家5秒时间选择（测试用，实际应该等待玩家输入）
+	await get_tree().create_timer(2.0).timeout
 
 ## AI购物
 func _process_ai_shopping(player) -> void:
-	# TODO: AI购物逻辑
-	pass
+	# 简单的AI购物逻辑
+	if player.total_salary >= 80:
+		# 买咖啡恢复HP
+		player.modify_hp(25)
+		player.total_salary -= 80
+		print(player.player_name, " bought coffee")
 
 ## 检查游戏结束
 func _check_game_end() -> bool:

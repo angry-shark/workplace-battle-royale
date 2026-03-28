@@ -1,5 +1,4 @@
 @tool
-class_name ProgressBarCustom
 extends ProgressBar
 ## ProgressBarCustom - 自定义进度条
 ## 支持渐变色、数值标签、多种样式
@@ -68,7 +67,7 @@ func _update_appearance():
 	if _label:
 		_label.text = value_format % [value, max_value]
 
-func set_value_no_signal(new_value: float):
+func set_value_silent(new_value: float):
 	value = new_value
 	_update_appearance()
 

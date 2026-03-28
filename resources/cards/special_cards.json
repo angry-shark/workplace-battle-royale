@@ -1,0 +1,74 @@
+{
+	"cards": [
+		{
+			"id": "special_job_hop",
+			"name": "跳槽机会",
+			"type": "special",
+			"description": "直接离开公司，游戏胜利（另类结局）",
+			"effects": {
+				"alternative_victory": "job_hop",
+				"requirement": "wealth_freedom_hex"
+			},
+			"cost": 0,
+			"obtain_method": "random_event"
+		},
+		{
+			"id": "special_arbitration",
+			"name": "劳动仲裁",
+			"type": "special",
+			"description": "被陷害时反制，陷害者HP-20",
+			"effects": {
+				"counter_trap": true,
+				"counter_damage": 20
+			},
+			"cost": 0,
+			"obtain_method": "epic_hex_unlock"
+		},
+		{
+			"id": "special_boss_favorite",
+			"name": "老板亲信",
+			"type": "special",
+			"description": "本季度免疫缩圈",
+			"effects": {
+				"elimination_immunity": true
+			},
+			"cost": 0,
+			"obtain_method": "legendary_hex_unlock"
+		},
+		{
+			"id": "special_sudden_death",
+			"name": "猝死预警",
+			"type": "special",
+			"description": "HP归零时，恢复50HP（一次性）",
+			"effects": {
+				"death_immunity": true,
+				"hp_recovery_on_death": 50
+			},
+			"cost": 0,
+			"obtain_method": "shop_rare"
+		},
+		{
+			"id": "special_overtime_pay",
+			"name": "加班费",
+			"type": "special",
+			"description": "本月加班不扣HP，工资+50%",
+			"effects": {
+				"overtime_no_hp_cost": true,
+				"overtime_salary_bonus": 0.5
+			},
+			"cost": 0
+		},
+		{
+			"id": "special_medical_leave",
+			"name": "病假条",
+			"type": "special",
+			"description": "本月跳过工作阶段，HP+30，绩效-50%",
+			"effects": {
+				"skip_work": true,
+				"hp_recovery": 30,
+				"kpi_penalty": 0.5
+			},
+			"cost": 0
+		}
+	]
+}

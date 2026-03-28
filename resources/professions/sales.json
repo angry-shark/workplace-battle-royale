@@ -29,5 +29,31 @@
 		"name": "业绩为王",
 		"buff": "每月绩效浮动范围±50%，社交类策略卡效果+25%",
 		"debuff": "基础HP消耗+2，绩效低于平均值时额外-10%"
-	}
+	},
+	"exclusive_hexes": [
+		{
+			"id": "hex_wolf_culture",
+			"name": "狼性文化",
+			"rarity": "common",
+			"description": "绩效波动±30%变为±40%"
+		},
+		{
+			"id": "hex_client_resource",
+			"name": "客户资源",
+			"rarity": "rare",
+			"description": "每月50%概率额外获得100工资"
+		},
+		{
+			"id": "hex_sales_champion",
+			"name": "销售冠军",
+			"rarity": "epic",
+			"description": "绩效爆发概率+20%，绩效+15%"
+		},
+		{
+			"id": "hex_sales_king",
+			"name": "销冠之王",
+			"rarity": "legendary",
+			"description": "绩效爆发概率+30%，联盟关系不可被破坏"
+		}
+	]
 }
