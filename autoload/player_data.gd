@@ -95,6 +95,26 @@ func initialize_new_game(p_name: String, p_profession: int, p_rank: int = Config
 	stats["games_played"] += 1
 	print("Player initialized: %s, Profession: %d, Rank: %d" % [p_name, p_profession, p_rank])
 
+## 从运行时Player同步当前游戏数据
+func sync_from_player(player: Player) -> void:
+	player_id = player.player_id
+	player_name = player.player_name
+	profession = player.profession
+	rank = player.rank
+	current_hp = player.current_hp
+	max_hp = player.max_hp
+	current_kpi = player.current_kpi
+	current_salary = player.current_salary
+	total_salary = player.total_salary
+	is_alive = player.is_alive
+	is_ai = player.is_ai
+	elimination_reason = player.elimination_reason
+	
+	hexes.assign(player.hexes)
+	hand_cards.assign(player.hand_cards)
+	allies.assign(player.allies)
+	current_game_stats = player.game_stats.duplicate(true)
+
 ## 修改HP
 func modify_hp(amount: int) -> void:
 	var old_hp = current_hp

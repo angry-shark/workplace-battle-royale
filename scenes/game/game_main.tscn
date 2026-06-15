@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://d8yvxg3ulq3b"]
+[gd_scene load_steps=10 format=3 uid="uid://d8yvxg3ulq3b"]
 
 [ext_resource type="Script" path="res://scenes/game/game_main.gd" id="1_game_main"]
 [ext_resource type="Script" path="res://scenes/components/player_info_panel.gd" id="2_player_info"]
 [ext_resource type="Script" path="res://scenes/components/message_log.gd" id="3_message_log"]
 [ext_resource type="Script" path="res://scenes/components/card_hand.gd" id="4_card_hand"]
 [ext_resource type="Script" path="res://scenes/components/hex_display.gd" id="5_hex_display"]
+[ext_resource type="Script" path="res://scenes/components/action_panel.gd" id="6_action_panel"]
+[ext_resource type="Script" path="res://scenes/components/shop_panel.gd" id="7_shop_panel"]
+[ext_resource type="Script" path="res://scenes/components/player_list_panel.gd" id="8_player_list"]
 
 [node name="GameMain" type="Node2D"]
 script = ExtResource("1_game_main")
@@ -64,33 +67,108 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -500.0
-offset_top = -180.0
+offset_top = -220.0
 offset_right = 500.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("6_action_panel")
 
-[node name="ActionTitle" type="Label" parent="UILayer/ActionPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 10.0
-offset_bottom = 35.0
-grow_horizontal = 2
-text = "行动选择"
-horizontal_alignment = 1
-
-[node name="CardHand" type="HBoxContainer" parent="UILayer/ActionPanel"]
+[node name="MainVBox" type="VBoxContainer" parent="UILayer/ActionPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 40.0
-offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="UILayer/ActionPanel/MainVBox"]
+layout_mode = 2
+text = "行动阶段"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+
+[node name="WorkButtons" type="HBoxContainer" parent="UILayer/ActionPanel/MainVBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="BtnNormal" type="Button" parent="UILayer/ActionPanel/MainVBox/WorkButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 44)
+text = "正常上班"
+theme_override_font_sizes/font_size = 14
+
+[node name="BtnOvertime" type="Button" parent="UILayer/ActionPanel/MainVBox/WorkButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 44)
+text = "拼命加班 (HP-15)"
+theme_override_font_sizes/font_size = 14
+
+[node name="BtnSlack" type="Button" parent="UILayer/ActionPanel/MainVBox/WorkButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 44)
+text = "划水摸鱼 (HP+5)"
+theme_override_font_sizes/font_size = 14
+
+[node name="CardSection" type="HBoxContainer" parent="UILayer/ActionPanel/MainVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="CardHand" type="HBoxContainer" parent="UILayer/ActionPanel/MainVBox/CardSection"]
+layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 script = ExtResource("4_card_hand")
+
+[node name="StatusLabel" type="Label" parent="UILayer/ActionPanel/MainVBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.953, 0.612, 0.071, 1)
+
+[node name="BtnEndTurn" type="Button" parent="UILayer/ActionPanel/MainVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "确认并结束行动"
+theme_override_font_sizes/font_size = 16
+
+[node name="TargetOverlay" type="Control" parent="UILayer/ActionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="UILayer/ActionPanel/TargetOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TargetVBox" type="VBoxContainer" parent="UILayer/ActionPanel/TargetOverlay/Panel"]
+layout_mode = 2
+
+[node name="OverlayTitle" type="Label" parent="UILayer/ActionPanel/TargetOverlay/Panel/TargetVBox"]
+layout_mode = 2
+text = "选择目标"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="TargetList" type="VBoxContainer" parent="UILayer/ActionPanel/TargetOverlay/Panel/TargetVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="MessageLog" type="RichTextLabel" parent="UILayer"]
 custom_minimum_size = Vector2(350, 400)
@@ -107,6 +185,58 @@ grow_vertical = 2
 bbcode_enabled = true
 scroll_following = true
 script = ExtResource("3_message_log")
+
+[node name="ShopPanel" type="PanelContainer" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_shop_panel")
+
+[node name="MainVBox" type="VBoxContainer" parent="UILayer/ShopPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+text = "商店"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="SalaryLabel" type="Label" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+text = "💰 可用工资: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+
+[node name="ItemsContainer" type="VBoxContainer" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatusLabel" type="Label" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.953, 0.612, 0.071, 1)
+
+[node name="RefreshBtn" type="Button" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+text = "刷新商品"
+theme_override_font_sizes/font_size = 13
+
+[node name="CloseBtn" type="Button" parent="UILayer/ShopPanel/MainVBox"]
+layout_mode = 2
+text = "离开商店"
+theme_override_font_sizes/font_size = 14
+
 
 [node name="HelpPanel" type="PanelContainer" parent="UILayer"]
 anchors_preset = 3

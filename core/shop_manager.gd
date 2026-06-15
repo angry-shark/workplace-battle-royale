@@ -219,6 +219,7 @@ func purchase_item(player: Player, item_index: int) -> bool:
 	
 	# 扣除费用
 	player.total_salary -= item.price
+	EventBus.player_salary_changed.emit(player.player_id, player.total_salary)
 	
 	# 减少库存
 	if item.stock > 0:
@@ -269,8 +270,7 @@ func _apply_purchase_effect(player: Player, item: ShopItem) -> void:
 			if effects.has("card_type") and effects.has("count"):
 				var card_type = _string_to_card_type(effects.card_type)
 				for i in range(effects.count):
-					# TODO: 调用CardManager抽卡
-					pass
+					CardManager.draw_card(player, card_type)
 		
 		"info":
 			# 显示信息选择界面

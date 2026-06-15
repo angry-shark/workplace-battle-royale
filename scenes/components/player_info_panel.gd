@@ -9,6 +9,7 @@ var _salary_label: Label
 var _rank_label: Label
 var _profession_icon: Label
 var _name_label: Label
+var _player_ref = null
 
 func _ready():
 	_setup_ui()
@@ -117,6 +118,7 @@ func _connect_signals() -> void:
 func update_player(player = null) -> void:
 	if not player:
 		player = PlayerData
+	_player_ref = player
 	
 	# 更新头像
 	_avatar.set_profession(player.profession)
@@ -183,13 +185,14 @@ func _on_hp_changed(player_id: int, current: int, max_hp: int) -> void:
 
 func _on_kpi_changed(player_id: int, kpi: int) -> void:
 	if player_id == 0 and _kpi_bar:
-		update_player()
+		update_player(_player_ref)
 
 func _on_salary_changed(player_id: int, salary: int) -> void:
 	if player_id == 0 and _salary_label:
-		_salary_label.text = str(PlayerData.total_salary)
+		var player = _player_ref if _player_ref else PlayerData
+		_salary_label.text = str(player.total_salary)
 
 func _on_promoted(player_id: int, new_rank: int) -> void:
 	if player_id == 0 and _rank_label:
 		_rank_label.text = "P" + str(new_rank)
-		update_player()
+		update_player(_player_ref)

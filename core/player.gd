@@ -101,6 +101,7 @@ func modify_salary(amount: int) -> void:
 func settle_salary() -> void:
 	total_salary += current_salary
 	game_stats["salary_earned"] += current_salary
+	EventBus.player_salary_changed.emit(player_id, total_salary)
 
 ## 晋升
 func promote() -> void:
@@ -156,6 +157,11 @@ func die(reason: String) -> void:
 	elimination_reason = reason
 	EventBus.player_eliminated.emit(player_id, reason)
 	print(player_name, " eliminated: ", reason)
+
+## 胜利
+func victory(victory_condition: int) -> void:
+	EventBus.game_ended.emit(victory_condition)
+	print(player_name, " victory! Condition: ", victory_condition)
 
 ## 复活（某些特殊技能可能用到）
 func revive() -> bool:

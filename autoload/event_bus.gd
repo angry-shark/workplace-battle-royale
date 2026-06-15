@@ -70,3 +70,10 @@ func show_message(message: String, type: int = MessageType.INFO):
 ## 发送通知快捷方法
 func notify(title: String, content: String):
 	ui_notification.emit(title, content)
+# 行动阶段协调
+signal player_action_completed
+signal player_action_phase_ready(player_id: int)
+# 商店阶段协调
+signal shop_completed
+
+

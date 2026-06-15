@@ -203,8 +203,14 @@ func on_quarter_end() -> void:
 func calculate_hex_effects(player: Player) -> Dictionary:
 	var effects = {
 		"hp_cost_reduction": 0,
+		"hp_recovery": 0,
+		"low_hp_recovery": 0,
+		"low_hp_threshold": 0,
 		"hp_recovery_bonus": 0,
 		"kpi_bonus": 0.0,
+		"kpi_penalty": 0.0,
+		"early_kpi_bonus": 0.0,
+		"early_turns": 0,
 		"salary_bonus": 0.0,
 		"shop_discount": 0.0,
 		"trap_success_bonus": 0.0,
@@ -256,6 +262,14 @@ func get_player_hexes(player_id: int) -> Array[HexData]:
 		result.append_array(_permanent_hexes[player_id])
 	
 	return result
+
+## 获取海克斯数据对象
+func get_hex_by_id(hex_id: String) -> HexData:
+	for rarity in _hex_pools:
+		for hex in _hex_pools[rarity]:
+			if hex.id == hex_id:
+				return hex
+	return null
 
 ## 检查玩家是否拥有特定海克斯
 func has_hex(player_id: int, hex_id: String) -> bool:

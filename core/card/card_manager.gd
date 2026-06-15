@@ -165,6 +165,10 @@ func play_card(player: Player, card_id: String, target: Player = null) -> bool:
 		EventBus.show_message("工资不足！", EventBus.MessageType.WARNING)
 		return false
 	
+	if card.type == CardType.ALLIANCE and player.get_meta("alliance_disabled", false):
+		EventBus.show_message("你本月无法使用联盟卡！", EventBus.MessageType.WARNING)
+		return false
+	
 	# 扣除费用
 	if card.cost > 0:
 		player.total_salary -= card.cost
@@ -213,7 +217,11 @@ func _execute_work_card(player: Player, card: CardData) -> void:
 	# 绩效加成（在月度结算时计算）
 	if effects.has("kpi_multiplier"):
 		# 存储到玩家的临时buff中
-		player.set_meta("work_kpi_multiplier", effects.kpi_multiplier)
+		var multiplier = effects.kpi_multiplier
+		if player.has_meta("work_card_debuff"):
+			multiplier *= 1.0 - float(player.get_meta("work_card_debuff"))
+			player.remove_meta("work_card_debuff")
+		player.set_meta("work_kpi_multiplier", multiplier)
 
 ## 执行陷害卡效果
 func _execute_trap_card(player: Player, card: CardData, target: Player) -> void:
@@ -239,6 +247,22 @@ func _execute_trap_card(player: Player, card: CardData, target: Player) -> void:
 		target.modify_kpi(-steal_amount)
 		player.modify_kpi(steal_amount)
 	
+	# 禁用联盟卡
+	if effects.get("disable_alliance", false):
+		target.set_meta("alliance_disabled", true)
+	
+	# 工作卡效果削弱
+	if effects.has("work_card_debuff"):
+		target.set_meta("work_card_debuff", effects.work_card_debuff)
+	
+	# 薪资影响
+	if effects.has("target_salary"):
+		target.set_meta("next_salary_multiplier", 1.0 + float(effects.target_salary))
+	
+	# 解除目标所有联盟
+	if effects.get("break_all_alliances", false):
+		target.allies.clear()
+	
 	# 暴露处理
 	if is_exposed:
 		EventBus.show_message(player.player_name + "陷害被发现了！", EventBus.MessageType.WARNING)
@@ -263,8 +287,18 @@ func _execute_alliance_card(player: Player, card: CardData, target: Player) -> v
 		
 		# 双倍伤害
 		if effects.get("double_damage", false):
-			# TODO: 实现背叛伤害
-			pass
+			target.modify_hp(-20)
+	
+	# 联盟互助
+	if effects.has("alliance_kpi_bonus"):
+		var bonus = float(effects.alliance_kpi_bonus)
+		player.set_meta("next_month_kpi_bonus", float(player.get_meta("next_month_kpi_bonus", 0.0)) + bonus)
+		target.set_meta("next_month_kpi_bonus", float(target.get_meta("next_month_kpi_bonus", 0.0)) + bonus)
+	
+	# 缩圈保护
+	if effects.has("rank_protection"):
+		player.set_meta("rank_protection", int(effects.rank_protection))
+		target.set_meta("rank_protection", int(effects.rank_protection))
 
 ## 执行特殊卡效果
 func _execute_special_card(player: Player, card: CardData, target: Player) -> void:

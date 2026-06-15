@@ -1,0 +1,99 @@
+{
+  "events": [
+    {
+      "id": "event_team_building",
+      "name": "团建活动",
+      "description": "公司组织团建，全员HP+10，但本月绩效-5%",
+      "trigger_chance": 0.15,
+      "effects": {
+        "all_hp": 10,
+        "all_kpi_multiplier": 0.95
+      }
+    },
+    {
+      "id": "event_overtime_wave",
+      "name": "加班潮",
+      "description": "项目赶工，全员HP-10，但本月绩效+20%",
+      "trigger_chance": 0.12,
+      "effects": {
+        "all_hp": -10,
+        "all_kpi_multiplier": 1.2
+      }
+    },
+    {
+      "id": "event_restructuring",
+      "name": "部门重组",
+      "description": "公司宣布重组，本季度淘汰人数+1",
+      "trigger_chance": 0.08,
+      "effects": {
+        "extra_elimination": 1
+      }
+    },
+    {
+      "id": "event_ceo_speech",
+      "name": "CEO讲话",
+      "description": "CEO发表激励演讲，全员士气提升，下月绩效+10%",
+      "trigger_chance": 0.10,
+      "effects": {
+        "next_month_kpi_bonus": 0.1
+      }
+    },
+    {
+      "id": "event_office_gossip",
+      "name": "办公室八卦",
+      "description": "流言四起，随机3人HP-5",
+      "trigger_chance": 0.12,
+      "effects": {
+        "random_hp": -5,
+        "random_count": 3
+      }
+    },
+    {
+      "id": "event_festival_bonus",
+      "name": "节日福利",
+      "description": "公司发放节日福利，全员获得200薪资",
+      "trigger_chance": 0.10,
+      "effects": {
+        "all_salary": 200
+      }
+    },
+    {
+      "id": "event_fire_drill",
+      "name": "消防演习",
+      "description": "全楼消防演习，本月行动阶段跳过",
+      "trigger_chance": 0.05,
+      "effects": {
+        "skip_action_phase": true
+      }
+    },
+    {
+      "id": "event_performance_review",
+      "name": "突击绩效面谈",
+      "description": "HR突击面谈，绩效最低的2人HP-10",
+      "trigger_chance": 0.07,
+      "effects": {
+        "bottom_hp": -10,
+        "bottom_count": 2
+      }
+    },
+    {
+      "id": "event_new_policy",
+      "name": "新政策出台",
+      "description": "公司突然取消弹性工作制，全员HP-5",
+      "trigger_chance": 0.06,
+      "effects": {
+        "all_hp": -5
+      }
+    },
+    {
+      "id": "event_lucky_draw",
+      "name": "年会抽奖",
+      "description": "年会抽奖环节！随机1人获得500薪资",
+      "trigger_chance": 0.03,
+      "effects": {
+        "random_salary": 500,
+        "random_count": 1
+      }
+    }
+  ]
+}
